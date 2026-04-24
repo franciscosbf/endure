@@ -1,6 +1,6 @@
 # endure
 
-An easy to use rate limiting library that implements 4 different algorithms (see [here](https://bytebytego.com/courses/system-design-interview/design-a-rate-limiter) if you wanna know how they work):
+An easy to use rate limiting library in TypeScript that implements 4 different algorithms (see [here](https://bytebytego.com/courses/system-design-interview/design-a-rate-limiter) if you wanna know how they work):
 - Token Bucket
 - Fixed Window Counter
 - Sliding Window Log
