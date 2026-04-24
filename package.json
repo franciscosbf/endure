@@ -1,0 +1,28 @@
+{
+  "name": "@franciscosbf/endure",
+  "description": "rate limiter library",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0",
+  "author": "Francisco Braço-Forte <f.s.f.b2001@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franciscosbf/endure.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "example:express": "tsc && npx ts-node examples/express/index.ts"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.3.0",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "express": "^5.2.1",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

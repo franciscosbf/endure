@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "exclude": [
+    "node_modules",
+    "examples",
+    "dist",
+    "jest.config.ts",
+    "src/**/*.test.*"
+  ]
+}
