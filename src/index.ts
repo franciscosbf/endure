@@ -1,5 +1,6 @@
 export { EndureException } from "./error";
 export {
+  type Seconds,
   type RateLimiter,
   SlidingWindowCounter,
   SlidingWindowLog,

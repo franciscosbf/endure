@@ -4,14 +4,14 @@ import express, {
   type Response,
 } from "express";
 
-import { SlidingWindowCounter } from "../../dist/index.js";
+import { SlidingWindowCounter, Seconds } from "../../dist/index.js";
 
 class RateLimited extends Error {}
 
 const app = express();
 const port = 8080;
 const limiter = SlidingWindowCounter.builder<string>()
-  .setThreshold(3)
+  .setThreshold(3 as Seconds)
   .setRequests(2)
   .build();
 

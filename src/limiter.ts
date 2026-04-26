@@ -1,5 +1,12 @@
 import { EndureException } from "./error";
 
+export type Seconds = number & { __brand: "seconds" };
+type Milliseconds = number & { __brand: "milliseconds" };
+
+function secondsToMilliseconds(seconds: Seconds): Milliseconds {
+  return (seconds * 1000) as Milliseconds;
+}
+
 export interface RateLimiter<V> {
   declined(victim: V): boolean;
 }
@@ -19,10 +26,10 @@ abstract class BaseRateLimiter<V, E> implements RateLimiter<V> {
 }
 
 abstract class BaseWindowLimiter<V, E> extends BaseRateLimiter<V, E> {
-  protected threshold: number;
+  protected threshold: Milliseconds;
   protected requests: number;
 
-  constructor(threshold: number, requests: number) {
+  constructor(threshold: Seconds, requests: number) {
     if (threshold < 1) {
       throw new EndureException("threshold must be greater than zero");
     }
@@ -32,7 +39,7 @@ abstract class BaseWindowLimiter<V, E> extends BaseRateLimiter<V, E> {
 
     super();
 
-    this.threshold = threshold * 1000;
+    this.threshold = secondsToMilliseconds(threshold);
     this.requests = requests;
   }
 }
@@ -48,7 +55,7 @@ class WindowLog {
 }
 
 abstract class BaseWindowLimiterBuilder<V> implements Builder<V> {
-  protected threshold: number = 10;
+  protected threshold: Seconds = 10 as Seconds;
   protected requests: number = 10;
 
   public abstract build(): RateLimiter<V>;
@@ -88,7 +95,7 @@ export class SlidingWindowLog<V> extends BaseWindowLimiter<V, WindowLog> {
 }
 
 export class SlidingWindowLogBuilder<V> extends BaseWindowLimiterBuilder<V> {
-  public setThreshold(threshold: number): this {
+  public setThreshold(threshold: Seconds): this {
     this.threshold = threshold;
 
     return this;
@@ -174,7 +181,7 @@ export class SlidingWindowCounter<V> extends BaseWindowLimiter<
 export class SlidingWindowCounterBuilder<
   V,
 > extends BaseWindowLimiterBuilder<V> {
-  public setThreshold(threshold: number): this {
+  public setThreshold(threshold: Seconds): this {
     this.threshold = threshold;
 
     return this;
@@ -231,7 +238,7 @@ export class FixedWindowCounter<V> extends BaseWindowLimiter<V, WindowCounter> {
 }
 
 export class FixedWindowCounterBuilder<V> extends BaseWindowLimiterBuilder<V> {
-  public setThreshold(threshold: number): this {
+  public setThreshold(threshold: Seconds): this {
     this.threshold = threshold;
 
     return this;
@@ -260,9 +267,9 @@ class Bucket {
 
 export class TokenBucket<V> extends BaseRateLimiter<V, Bucket> {
   private tokens: number;
-  private period: number;
+  private period: Milliseconds;
 
-  constructor(tokens: number, period: number) {
+  constructor(tokens: number, period: Seconds) {
     if (tokens < 1) {
       throw new EndureException("tokens must be greater than zero");
     }
@@ -273,7 +280,7 @@ export class TokenBucket<V> extends BaseRateLimiter<V, Bucket> {
     super();
 
     this.tokens = tokens;
-    this.period = period * 1000;
+    this.period = secondsToMilliseconds(period);
   }
 
   public declined(victim: V): boolean {
@@ -303,7 +310,7 @@ export class TokenBucket<V> extends BaseRateLimiter<V, Bucket> {
 
 export class TokenBucketBuilder<V> implements Builder<V> {
   private tokens: number = 10;
-  private period: number = 1;
+  private period: Seconds = 1 as Seconds;
 
   public setTokens(tokens: number): this {
     this.tokens = tokens;
@@ -311,7 +318,7 @@ export class TokenBucketBuilder<V> implements Builder<V> {
     return this;
   }
 
-  public setPeriod(period: number): this {
+  public setPeriod(period: Seconds): this {
     this.period = period;
 
     return this;

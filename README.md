@@ -9,10 +9,10 @@ An easy to use rate limiting library in TypeScript that implements 4 different a
 ## Example
 
 ```typescript
-import { SlidingWindowLog } from "@franciscosbf/endure";
+import { SlidingWindowLog, Seconds } from "@franciscosbf/endure";
 
 let limiter = SlidingWindowLog.builder<string>()
-  .setThreshold(40)
+  .setThreshold(40 as Seconds)
   .setRequests(4)
   .build();
 

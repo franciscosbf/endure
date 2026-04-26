@@ -3,7 +3,7 @@
   "description": "rate limiter library",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Francisco Braço-Forte <f.s.f.b2001@gmail.com>",
   "repository": {
     "type": "git",

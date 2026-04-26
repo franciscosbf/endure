@@ -3,6 +3,7 @@ import { test, expect, jest } from "@jest/globals";
 import {
   FixedWindowCounter,
   RateLimiter,
+  Seconds,
   SlidingWindowCounter,
   SlidingWindowLog,
   TokenBucket,
@@ -18,7 +19,7 @@ function declined(limiter: RateLimiter<string>, seconds: number): boolean {
 
 test("SlidingWindowLog", () => {
   let limiter = SlidingWindowLog.builder<string>()
-    .setThreshold(40)
+    .setThreshold(40 as Seconds)
     .setRequests(4)
     .build();
 
@@ -33,7 +34,7 @@ test("SlidingWindowLog", () => {
 
 test("SlidingWindowCounter", () => {
   let limiter = SlidingWindowCounter.builder<string>()
-    .setThreshold(60)
+    .setThreshold(60 as Seconds)
     .setRequests(7)
     .build();
 
@@ -49,7 +50,7 @@ test("SlidingWindowCounter", () => {
 
 test("FixedWindowCounter", () => {
   let limiter = FixedWindowCounter.builder<string>()
-    .setThreshold(20)
+    .setThreshold(20 as Seconds)
     .setRequests(4)
     .build();
 
@@ -70,7 +71,7 @@ test("FixedWindowCounter", () => {
 
 test("TokenBucket", () => {
   let limiter = TokenBucket.builder<string>()
-    .setPeriod(20)
+    .setPeriod(20 as Seconds)
     .setTokens(4)
     .build();
 
